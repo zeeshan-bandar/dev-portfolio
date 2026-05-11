@@ -1,0 +1,120 @@
+/*
+ * Mission Control — global styles
+ *
+ * Color tokens come from PORTFOLIO_BRIEF.md §4. They live as CSS custom
+ * properties so plain CSS can use them (`var(--accent)`) and Tailwind
+ * exposes them as utilities (`bg-background`, `text-accent`, ...) — see
+ * tailwind.config.ts for the mapping.
+ *
+ * The site is dark-only by design — no light theme.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Surfaces */
+  --bg-deep: #050810;
+  --bg-base: #0a0e1a;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(255, 255, 255, 0.05);
+
+  /* Borders */
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.12);
+
+  /* Text */
+  --text-primary: #f5f7fa;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.55);
+
+  /* Accent — cyan/teal */
+  --accent: #5dcaa5;
+  --accent-soft: #9fe1cb;
+  --accent-bg: rgba(93, 202, 165, 0.12);
+
+  /* Status indicators */
+  --status-active: #5dcaa5;
+  --status-warning: #efbf75;
+  --status-archived: rgba(255, 255, 255, 0.4);
+}
+
+html,
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+}
+
+body {
+  font-family:
+    var(--font-geist-sans),
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /*
+   * Subtle breathing grid backdrop (PORTFOLIO_BRIEF.md §2 visual signature).
+   * Apply to a fixed full-screen element behind the page content.
+   */
+  .bg-mc-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: mc-grid-breathe 14s ease-in-out infinite;
+  }
+
+  @keyframes mc-grid-breathe {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.55;
+    }
+  }
+
+  /*
+   * Flowing dashes used by topology-graph.tsx connecting lines.
+   * Continuously offsets the dash pattern toward the line's start (the
+   * astronaut), reading as "data flowing inward".
+   */
+  .mc-line-flow {
+    animation: mc-line-flow 1.6s linear infinite;
+  }
+
+  @keyframes mc-line-flow {
+    to {
+      stroke-dashoffset: -16;
+    }
+  }
+
+  /* Respect motion preferences — freeze the breathe + flow animations. */
+  @media (prefers-reduced-motion: reduce) {
+    .bg-mc-grid,
+    .mc-line-flow {
+      animation: none;
+    }
+  }
+}

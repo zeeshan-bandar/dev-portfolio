@@ -1,0 +1,32 @@
+# Toolchain pin for the Mission Control portfolio.
+# Run `mise install` to fetch the pinned versions, then prefix dev commands
+# with `mise exec --` (or activate mise in your shell) so they use these
+# versions instead of whatever's on your global PATH.
+
+[tools]
+node = "20.19.6"
+
+[env]
+# Keep npm noise down during installs in CI/Docker.
+NPM_CONFIG_FUND = "false"
+NPM_CONFIG_AUDIT = "false"
+
+[tasks.dev]
+description = "Run the Next.js dev server (hot reload, http://localhost:3000)"
+run = "npm run dev"
+
+[tasks.build]
+description = "Build the production bundle"
+run = "npm run build"
+
+[tasks.start]
+description = "Run the production build locally"
+run = "npm run start"
+
+[tasks.lint]
+description = "Lint the codebase"
+run = "npm run lint"
+
+[tasks.format]
+description = "Format the codebase with Prettier"
+run = "npm run format"

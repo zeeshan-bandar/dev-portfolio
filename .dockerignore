@@ -1,0 +1,36 @@
+# Keep the Docker build context lean — these are either rebuilt inside the
+# image, irrelevant at runtime, or shouldn't ship to a public registry.
+
+# Dependencies (installed inside the deps stage)
+node_modules
+npm-debug.log*
+
+# Build output (regenerated inside the builder stage)
+.next
+out
+dist
+
+# Dev toolchain
+.git
+.gitignore
+.github
+.vscode
+.idea
+.DS_Store
+
+# Local env / secrets
+.env
+.env.*
+!.env.example
+
+# Docs & planning material — not needed at runtime
+README.md
+ARCHITECTURE.md
+local-reference
+docs
+
+# Misc
+*.md
+!next.config.mjs
+coverage
+.turbo
